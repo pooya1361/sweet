@@ -1,0 +1,20 @@
+﻿@model newCustomerModel
+<div>
+	@foreach (var customer in ViewBag.Customers)
+	{
+		<div class="customer">
+			<span>@customer.name</span>
+			<span>@customer.countryName</span>
+		</div>	
+	}
+
+	<div>
+		@using (Html.BeginForm("AddCustomer", "Home", FormMethod.Post))
+		{
+			@Html.TextBoxFor(model => model.name)
+			@Html.DropDownListFor(model => model.countryId, new SelectList(ViewBag.Countries, "id", "name"))
+			<button type="submit">Lägg till</button>
+		}
+	</div>
+</div>
+
