@@ -1,20 +1,51 @@
 ﻿@model newCustomerModel
-<div>
-	@foreach (var customer in ViewBag.Customers)
-	{
-		<div class="customer">
-			<span>@customer.name</span>
-			<span>@customer.countryName</span>
-		</div>	
-	}
+<div class="d-flex flex-column gap-4">
+	<h1 class="text-center">SWEET</h1>
+	<div class="container border">
+		<div class="row bg-secondary text-white">
+			<span class="col text-center fw-bold border-end">Namn</span>
+			<span class="col text-center fw-bold">Land</span>
+		</div>
+		@foreach (var customer in ViewBag.Customers)
+		{
+			<div class="row">
+				<span class="col border-end">@customer.name</span>
+				<span class="col">@customer.countryName</span>
+			</div>
+		}
+	</div>
+
+	<!-- Button trigger modal -->
+	<div class="d-flex justify-content-end">
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+			Lägg till ny kund
+		</button>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ny kund</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				@using (Html.BeginForm("AddCustomer", "Home", FormMethod.Post))
+				{
+					<div class="modal-body">
+						@Html.TextBoxFor(model => model.name)
+						@Html.DropDownListFor(model => model.countryId, new SelectList(ViewBag.Countries, "id", "name"))
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Avbryt</button>
+						<button type="submit" class="btn btn-primary">Spara</button>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
 
 	<div>
-		@using (Html.BeginForm("AddCustomer", "Home", FormMethod.Post))
-		{
-			@Html.TextBoxFor(model => model.name)
-			@Html.DropDownListFor(model => model.countryId, new SelectList(ViewBag.Countries, "id", "name"))
-			<button type="submit">Lägg till</button>
-		}
 	</div>
 </div>
 
